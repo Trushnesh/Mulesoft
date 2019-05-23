@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="climbstair-test-suite.xml" />
+	<munit:test name="1StepPerStride-post:\stridesRequired:api-configTest" description="Test" doc:id="7342f218-4ba4-4104-ac35-060f77b9dec8" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=[4,8,9]" doc:id="6b2838d2-906b-4ba1-8a4c-83bdf2967842" >
+				<munit:payload value='{"numberOfSteps": [4,8,9],"stepsPerStride": 1}' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="bc84bc0d-31f1-4a2c-a6cf-55822cd09fe5" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that number of strides required=25" doc:id="df544c1f-0e5f-4d15-914a-f999167ac146" expression="#[payload]" is="25" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+<munit:test name="2StepsPerStride-post:\stridesRequired:api-configTest" description="Test" doc:id="7342f218-4ba4-4104-ac35-060f77b9dec8" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=[4,8,9]" doc:id="6b2838d2-906b-4ba1-8a4c-83bdf2967842" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [4,8,9],"stepsPerStride": 2}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="bc84bc0d-31f1-4a2c-a6cf-55822cd09fe5" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that number of strides required=15" doc:id="df544c1f-0e5f-4d15-914a-f999167ac146" expression="#[payload]" is="15" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="3StepsPerStride-post:\stridesRequired:api-configTest" description="Test" doc:id="0b6c3fa8-3b13-4636-b289-7eb29c7c4a51" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=[4,8,9]" doc:id="319901e2-197b-4b52-ac07-a86cd55b9303" >
+				<munit:payload value='{"numberOfSteps": [4,8,9],"stepsPerStride": 3}' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="9fbe41e8-de16-4fcc-a9ba-1068bb67c713" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that number of strides required=12" doc:id="0c9d48bc-56eb-4c5d-ac07-71bf057e4003" expression="#[payload]" is="12" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+<munit:test name="4StepsPerStride-post:\stridesRequired:api-configTest" description="Test" doc:id="a89cf009-90ca-4678-bc0a-a22b718f578f" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=[4,8,9]" doc:id="816ba854-2251-4fd4-a536-db059be6ed5b" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [4,8,9],"stepsPerStride": 4}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="9a995473-0ee6-4453-9085-ee85710fe4e0" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that number of strides required=10" doc:id="677bd4d3-4fee-4229-8355-c9036a6c3102" expression="#[payload]" is="10" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="MissingNumberOfSteps-post:\stridesRequired:api-configTest" description="Test" doc:id="e85e8c18-f62c-4dd1-9270-e53ad0519b57" >
+		<munit:execution >
+			<munit:set-event doc:name="stepsPerStride: 4" doc:id="0155d6b3-9418-4e56-8e01-d77143a97eeb" >
+				<munit:payload mediaType="application/json" value='{"stepsPerStride": 4}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="987d5c5e-64a3-4f2d-8f26-b5ae3508cade" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="c71786ee-a71b-41f2-8810-8858fb67f403" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="MissingstepsPerStride-post:\stridesRequired:api-configTest" description="Test" doc:id="b42e4a0f-f6e8-4f96-8537-ddb411e46319" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=1" doc:id="1b5f3883-5907-429c-ac55-a0c1a72720b0" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": 1}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="8442a005-4942-4a5f-9b6d-b198fd7e3dd2" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="8d30e446-6c29-4f64-a92e-2b426d666f56" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="NoArrayOfNumberOfSteps-post:\stridesRequired:api-configTest" description="Test" doc:id="b6be80c7-dc14-4ff0-a4ae-bbe2b53809d4" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps=1" doc:id="6d19ee77-be2a-47d1-8b8a-738202f4190b" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": 1,"stepsPerStride": 4}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="dec19075-c518-462a-9206-b286966b18b3" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="c4bf4424-1900-4657-a60e-89ef699e33a6" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="ArrayOfNumberOfSteps_ExceedsSize-post:\stridesRequired:api-configTest" description="Test" doc:id="40360dd2-b3e9-4c4a-98e8-c685521a3249" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps more than 30" doc:id="9110d35b-8d30-42d7-9a0d-1fe85dea0586" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"stepsPerStride": 4}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="a3d0e5d4-260e-4425-a565-c3896407a4ea" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="50f1c0c6-232e-4346-9afc-a829d292da01" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="ArrayOfNumberOfSteps_ContainsNumberHigherThanLimit-post:\stridesRequired:api-configTest" description="Test" doc:id="cdd90d21-d7ae-4e83-bef6-f0d0183ab16e" >
+		<munit:execution >
+			<munit:set-event doc:name="numberOfSteps array has number larger than 20" doc:id="2675280c-87e9-462f-98b3-f963bac23ba8" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [1,1,1,1,1,1,1,21],"stepsPerStride": 4}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="69f6983f-0fbe-4062-80e8-995abec6b530" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="703f29de-b4a5-4d65-885c-deb87251366e" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="stepsPerStride_ContainsNumberHigherThanLimit-post:\stridesRequired:api-configTest" description="Test" doc:id="276d1be7-4e69-46f7-b69c-3f4028607c31" >
+		<munit:execution >
+			<munit:set-event doc:name="stepsPerStride has number larger than 4" doc:id="6fd062e6-097e-4b3e-a3f7-90e2617dbfbd" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [1,1,1,1,1,1,1],"stepsPerStride": 5}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="28714c9a-4f9a-4610-b2bd-a8ab3b2f0208" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="a7e1a143-f760-45f8-bdd9-aa0901859ee2" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="stepsPerStride_ContainsZero-post:\stridesRequired:api-configTest" description="Test" doc:id="518a8576-4c85-4790-bd14-e6392e9e1e19" >
+		<munit:execution >
+			<munit:set-event doc:name="stepsPerStride = 0" doc:id="f6219ac6-7931-47d7-be2d-75b5af5e3e92" >
+				<munit:payload mediaType="application/json" value='{"numberOfSteps": [1,1,1,1,1,1,1],"stepsPerStride": 0}'/>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\stridesRequired:api-config" doc:id="bbca895e-e333-4ea1-8be8-94c9e5380b0d" name="post:\stridesRequired:api-config"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Invalid Request" doc:id="021fda92-1d65-45cb-9cce-6d665ea8a162" expression="#[payload]" is="{'message': 'Invalid Request! Mandatory fields are missing in your request!'}" message="Test Case Passed!"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

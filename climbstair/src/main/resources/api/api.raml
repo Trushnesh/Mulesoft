@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Sample API
+/stridesRequired:
+  post:
+    body:
+      application/json:
+            schema: !include ../schemas/stairclimb.schema.json
+    responses:
+      200:
+        body:
+          application/json:

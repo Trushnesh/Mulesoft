@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="schema" format="json">
+      <types:shape format="json-schema" location="schemas/stairclimb_schema.json"/>
+    </types:type>
+    <types:type name="test" format="json">
+      <types:shape format="weave" example="examples/stairclimb.json"><![CDATA[%dw 2.0
+
+type test = {|
+  numberOfSteps: Array<Number {"typeId": "int"}>, 
+  stepsPerStride: Number {"typeId": "int"}
+|} {"example": "{\"numberOfSteps\":[17,17],\"stepsPerStride\":3}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#720254a4-4810-4259-a4db-ea2d6610c34a">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="test"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="test"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
